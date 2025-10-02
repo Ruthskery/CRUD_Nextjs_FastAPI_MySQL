@@ -33,3 +33,20 @@ export async function deleteUser(id: number): Promise<{ message: string }> {
   }
   return res.json();
 }
+
+export async function updateUser(
+  id: number,
+  name: string,
+    email: string
+): Promise<User> {
+  const res = await fetch(`${API_BASE}${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email }),
+  });  
+    if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.detail || "Failed to update user");
+  }
+    return res.json();
+}
